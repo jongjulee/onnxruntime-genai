@@ -19,7 +19,11 @@ namespace Genny
         private Model _model;
         private Tokenizer _tokenizer;
         private ConfigurationModel _configuration;
-        private string _modelPath = "D:\\Repositories\\phi2_onnx";
+
+
+        private string _modelPath = @"C:\Users\leejo\source\models\Phi-3.5-mini-instruct-onnx\cpu_and_mobile\cpu-int4-awq-block-128-acc-level-4";
+        //private string _modelPath = @"C:\Users\leejo\source\models\Phi-3.5-mini-instruct-onnx\cuda\cuda-int4-awq-block-128";
+
         private bool _isModelLoaded;
 
         public MainWindow()

@@ -10,32 +10,33 @@ void PrintUsage()
 
 using OgaHandle ogaHandle = new OgaHandle();
 
-if (args.Length < 1)
-{
-    PrintUsage();
-    Environment.Exit(-1);
-}
+// if (args.Length < 1)
+// {
+//     PrintUsage();
+//     Environment.Exit(-1);
+// }
 
-bool interactive = false;
-string modelPath = string.Empty;
+bool interactive = true;
+string modelPath = @"C:\Users\leejo\source\models\Phi-3.5-mini-instruct-onnx\cuda\cuda-int4-awq-block-128";
+//string modelPath = @"C:\Users\leejo\source\models\Phi-3.5-mini-instruct-onnx\cpu_and_mobile\cpu-int4-awq-block-128-acc-level-4";
 
-uint i = 0;
-while (i < args.Length)
-{
-    var arg = args[i];
-    if (arg == "-i")
-    {
-        interactive = true;
-    }
-    else if (arg == "-m")
-    {
-        if (i + 1 < args.Length)
-        {
-            modelPath = Path.Combine(args[i+1]);
-        }
-    }
-    i++;
-}
+// uint i = 0;
+// while (i < args.Length)
+// {
+//     var arg = args[i];
+//     if (arg == "-i")
+//     {
+//         interactive = true;
+//     }
+//     else if (arg == "-m")
+//     {
+//         if (i + 1 < args.Length)
+//         {
+//             modelPath = Path.Combine(args[i+1]);
+//         }
+//     }
+//     i++;
+// }
 
 if (string.IsNullOrEmpty(modelPath))
 {
@@ -73,11 +74,11 @@ do
     {
         continue;
     }
-    var sequences = tokenizer.Encode($"<|user|>{prompt}<|end|><|assistant|>");
+    var sequences = tokenizer.Encode($"|system|>You are a helpful AI assistant.<|end|><|user|>{prompt}<|end|><|assistant|>");
 
     using GeneratorParams generatorParams = new GeneratorParams(model);
     generatorParams.SetSearchOption("min_length", 50);
-    generatorParams.SetSearchOption("max_length", 200);
+    generatorParams.SetSearchOption("max_length", 1024);
     generatorParams.SetInputSequences(sequences);
     if (option == 1) // Complete Output
     {
